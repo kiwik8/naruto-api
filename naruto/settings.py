@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,12 +77,21 @@ WSGI_APPLICATION = 'naruto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+db_user = 'postgres'
+db_password = os.environ.get('DB_PASSWORD')
+db_host = '192.168.1.3'
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'naruto',
+       'USER': db_user,
+       'PASSWORD': db_password,
+       'HOST': db_host,
+       'PORT': 5432,
+   }
 }
+
 
 
 # Password validation
@@ -128,15 +138,3 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
-from django.utils.translation import gettext as _
-import os
-
-# Available Languages
-LANGUAGES = [
-    ('fr', _('French')),
-    ('en', _('English')),
-]
-# Locales available path
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale/')
-]

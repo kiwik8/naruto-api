@@ -10,9 +10,11 @@ class BaseScraper:
         self.BASE_URL = "https://naruto.fandom.com"
         self.character = Character
         self.category = Category
+        self.language = language
+        self.session = requests.Session()
 
     def get_soup(self, url):
-        response = requests.get(url)
+        response = self.session.get(url)
         self.soup = BeautifulSoup(response.text, 'lxml')
         return self.soup
 
