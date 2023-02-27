@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import html
 from api.models import Character, Category
+import logging
 
 
 class BaseScraper:
@@ -12,6 +13,7 @@ class BaseScraper:
         self.category = Category
         self.language = language
         self.session = requests.Session()
+        logging.basicConfig(level=logging.INFO)
 
     def get_soup(self, url):
         response = self.session.get(url)

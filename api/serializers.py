@@ -25,10 +25,10 @@ class CategoryNameSerializer(serializers.ModelSerializer):
 class CharacterListSerializer(serializers.Serializer):
 
     id = serializers.IntegerField()
-    fr_categories = serializers.SerializerMethodField()
     name = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
+    fr_categories = serializers.SerializerMethodField()
 
 
     class Meta:

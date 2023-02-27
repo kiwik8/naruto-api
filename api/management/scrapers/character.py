@@ -14,7 +14,6 @@ class CharacterScraper(BaseScraper):
         super().__init__(language)
         self.letter = 'A'
         self.language = language
-        logging.basicConfig(level=logging.INFO)
 
     
     def get_url(self, letter):
@@ -45,7 +44,7 @@ class CharacterScraper(BaseScraper):
             # submenu_title = soup.find('th', class_="mainheader", text="Personal")
             submenu_title = soup.find(find_header)
             if submenu_title is None:
-                print("No submenu finded")
+                logging.debug("No submenu finded")
                 return name, description, image, {}
             tr = submenu_title.find_parent()
             tbody = tr.find_parent()

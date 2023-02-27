@@ -6,5 +6,5 @@ class Command(BaseCommand):
     
 
     def handle(self, *args, **options):
-        scraper = CategoryScraper('fr')
+        scraper = CategoryScraper()
         scraper.get_categories_characters()
