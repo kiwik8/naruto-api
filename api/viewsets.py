@@ -5,6 +5,8 @@ from api.serializers import *
 
 class CharacterViewSet(viewsets.ReadOnlyModelViewSet):
 
+    pagination_class = ClassicPagination
+
     def get_language(self, request, language):
         if language is not None:
             request.session['language'] = language
@@ -39,6 +41,10 @@ class CharacterViewSet(viewsets.ReadOnlyModelViewSet):
         language = kwargs.get('language', None)
         language = self.get_language(request, language)
         queryset = self.get_queryset()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True, language=language)
+            return self.get_paginated_response(serializer.data)
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data=queryset, many=True, language=language)
         serializer.is_valid(raise_exception=False)

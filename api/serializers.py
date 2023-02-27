@@ -1,10 +1,6 @@
 from rest_framework import serializers
 from api.models import Character, Category
-from api import variables
-import random
-import string
-import api.connection
-
+from api.pagination import ClassicPagination
 
 
 
@@ -69,6 +65,9 @@ class CharacterListSerializer(serializers.Serializer):
 
     def get_fr_categories(self, obj):
         return CategoryNameSerializer(obj.fr_categories.all(), many=True).data
+
+
+
 
 
 class CharacterDetailSerializer(serializers.ModelSerializer):
