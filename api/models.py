@@ -11,7 +11,10 @@ class Character(models.Model):
     en_general_infos = models.JSONField(null=True)
 
     def __str__(self):
-        return self.en_name
+        if self.en_name is None:
+            return self.fr_name
+        else:
+            return self.en_name
 
 class Category(models.Model):
     name = models.CharField(max_length=100, null=True)
