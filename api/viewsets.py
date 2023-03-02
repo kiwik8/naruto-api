@@ -25,6 +25,7 @@ class CharacterViewSet(viewsets.ReadOnlyModelViewSet):
         character_id = self.request.GET.get('id')
         if character_id is not None:
             queryset = queryset.filter(id=character_id)
+        queryset = queryset.order_by('id')
         return queryset
 
 
