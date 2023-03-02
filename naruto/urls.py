@@ -11,5 +11,5 @@ router.register('fr/categories', CategoryViewSet, basename='categories')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    re_path(r'^(?P<version>(v1))/', include(router.urls)),
+    re_path(r'^api/(?P<version>(v1))/', include(router.urls)),
 ]

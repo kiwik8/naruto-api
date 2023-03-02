@@ -2,20 +2,20 @@ FROM python:3.11.2
 ENV PYTHONUNBUFFERED 1
 RUN git clone https://github.com/kiwik8/naruto-api.git /code
 WORKDIR /code
-RUN ls -la .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-ARG DB_PASSWORD
-ENV DB_PASSWORD=$DB_PASSWORD
-ARG DB_HOST
-ARG PORT
-ENV DB_HOST=$DB_HOST
+ARG PORT=80
 ENV DB_USER=postgres
 ENV DB_NAME=postgres
 ENV DB_PORT=5432
 VOLUME /code
-RUN python manage.py makemigrations
-RUN python manage.py migrate
-RUN python manage.py loaddata data_fixture.json
 EXPOSE 80
-RUN python manage.py runserver 0.0.0.0:$PORT
+CMD python manage.py makemigrations && python manage.py migrate && python manage.py loaddata data_fixture.json && python manage.py runserver 0.0.0.0:$PORT 
+
+
+# docker run --env-file env.txt -d -p 80:80  -v src:/code --name naruto_app naruto-api
+
+### env.txt file format:
+#DB_PASSWORD=test1234
+#DB_HOST=localhost
+#PORT=8000 optional, default=80
