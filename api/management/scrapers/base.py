@@ -20,8 +20,6 @@ class BaseScraper:
         self.soup = BeautifulSoup(response.text, 'lxml')
         return self.soup
 
-    def get_data(self):
-        raise NotImplementedError
 
     def get_url(self, letter):
         if self.language == 'en':

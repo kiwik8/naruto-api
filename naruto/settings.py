@@ -76,15 +76,24 @@ WSGI_APPLICATION = 'naruto.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-db_user = 'postgres'
+# private values you must define in building args 
+db_host = os.environ.get('DB_HOST', None)
 db_password = os.environ.get('DB_PASSWORD')
-db_host = '192.168.1.3'
+# public values you can define in Dockerfile
+db_name = os.environ.get('DB_NAME')
+db_user = os.environ.get('DB_USER')
+db_port = os.environ.get('DB_PORT')
+# local values for me
+if db_host is None:
+    db_name = 'postgres'
+    db_user = 'postgres'
+    db_host = '192.168.1.3'
+    db_port = 5432
 
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'naruto',
+       'NAME': db_name,
        'USER': db_user,
        'PASSWORD': db_password,
        'HOST': db_host,

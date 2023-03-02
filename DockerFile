@@ -1,0 +1,21 @@
+FROM python:3.11.2
+ENV PYTHONUNBUFFERED 1
+RUN git clone https://github.com/kiwik8/naruto-api.git /code
+WORKDIR /code
+RUN ls .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+ARG DB_PASSWORD
+ENV DB_PASSWORD=$DB_PASSWORD
+ARG DB_HOST
+ARG PORT
+ENV DB_HOST=$DB_HOST
+ENV DB_USER=postgres
+ENV DB_NAME=naruto
+ENV DB_PORT=5432
+VOLUME /code
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+RUN python manage.py loadata data.json
+EXPOSE 80
+RUN python manage.py runserver 0.0.0.0:$PORT
